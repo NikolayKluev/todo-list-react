@@ -1,0 +1,194 @@
+$bt-add-color: rgba(18, 240, 10, 0.4);
+$bt-cancel-color: #8d8d8d;
+$dt-del-color: #a40404;
+$border-color: rgba(56, 21, 0, 0.533);
+
+
+$maxWidth: 1440px;
+$maxLaptopWidth: 834px;
+$maxPhoneWidth: 377px;
+$pointer: pointer;
+
+@mixin elem($flex-direction, $gap, $justify-content, $align-items, $width) {
+    display: flex;
+    flex-direction: $flex-direction;
+    gap: $gap;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    width: $width;
+}
+
+@mixin button($back-color) {
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    color: black;
+    border-radius: 10px;
+    background-color: $back-color;
+    cursor: pointer;
+}
+
+@mixin active-button {
+    transform: scale(0.97);
+}
+
+@mixin a() {
+    text-decoration: none;
+    color: black;
+}
+
+@mixin a-hover {
+    color: $border-color;
+}
+
+@mixin a-active {
+    color: black;
+    transform: scale(0.97);
+}
+
+@mixin input {
+    width: 100%;
+    height: 30px;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 10px;
+}
+
+
+.app {
+    max-width: $maxWidth;
+    @include elem(column, 20px, center, unset, 100%);
+    justify-self: center;
+
+    hr {
+        border-color: $border-color;
+    }
+
+    nav {
+        @include elem(row, 0, space-between, center, 100%)
+    }
+
+    .container {
+        @include elem(column, 20px, unset, unset, 100%);
+        margin-bottom: 20px;
+    }
+
+    .container-item {
+        @include elem(column, 5px, unset, unset, 50%)
+    }
+
+    .bt-add {
+        @include button($bt-add-color);
+
+        &:active {
+            @include active-button();
+        }
+    }
+
+    .bt-del {
+        @include button($dt-del-color);
+        width: 150px;
+
+        &:active {
+            @include active-button();
+        }
+    }
+
+    .bt-cancel {
+        @include button($bt-cancel-color);
+
+        &:active {
+            @include active-button();
+        }
+    }
+
+    a {
+        @include a();
+
+        &:hover {
+            @include a-hover();
+        }
+
+        &:active {
+            @include a-active();
+        }
+    }
+
+    .contact-form {
+        @include elem(column, 10px, unset, center, 50%);
+        align-self: center;
+
+        @media (max-width: $maxPhoneWidth) {
+            @include elem(column, 10px , unset, center, 90%)
+        }
+    }
+
+    .input-field,
+    .input-textarea {
+        @include elem(column, 5px, unset, unset, 90%);
+
+        @media (max-width: $maxLaptopWidth) {
+            @include elem(column, 10px , unset, center, 90%)
+        }        
+    }
+
+    .priority-selector {
+        @include elem(column, 5px, unset, unset, 50%)
+    }
+
+    input,
+    select,
+    textarea {
+        @include input();
+    }
+
+
+    ul {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        padding-inline-start: 0;
+        justify-content: space-between;
+        justify-items: center;
+
+        @media (max-width: $maxLaptopWidth) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: $maxPhoneWidth) {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    li {
+        list-style: none;
+        max-width: 400px;
+        @include elem(row, 0, space-between, unset, 100%);
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid $border-color;
+
+        div {
+            @include elem(column, 5px, unset, unset, 60%);           
+        }
+    }
+
+    .text-content {        
+        overflow-wrap: break-word;        
+    }
+
+    .two-buttons {
+        @include elem(row, 5px, unset, unset, 100%)
+    }
+
+}
