@@ -12,6 +12,8 @@ const CreateTask = () => {
 
     const navigate = useNavigate();
 
+    const [taskPriority, setTaskPriority] = useState('low');
+
     // хук введенных данных
     const [formData, setFormData] = useState({
         title: '',
@@ -25,9 +27,10 @@ const CreateTask = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    // функция перебора статуса
-    const handlePriorityChange = (priority) => {
-        setFormData({ ...formData, priority });
+    // Функция-обработчик, которая будет обновлять состояние
+    const handlePriorityChange = (name, value) => {
+        // console.log(`Поле ${name} изменено на ${value}`);
+        setTaskPriority(value);        
     };
 
 
@@ -35,7 +38,7 @@ const CreateTask = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Проверка на пустые поля (опционально, но полезно)
+        // Проверка на пустые поля 
         if (!formData.title.trim() || !formData.description.trim()) {
             alert('Пожалуйста, заполните все поля.');
             return;
@@ -72,7 +75,7 @@ const CreateTask = () => {
                 <h2>Создать задание</h2>
                 <InputField label="Название" type="text" name="title" placeholder="Введите название" onChange={handleInputChange} />
                 <InputTextArea label="Описание" type="text" name="description" placeholder="Опишите задание" onChange={handleInputChange} />
-                <PrioritySelector label="Приоритет" onPriorityChange={handlePriorityChange} />
+                <PrioritySelector label="Приоритет" name="priority" value={taskPriority} onChange={handlePriorityChange} />
 
                 <button className="bt-add" type="submit">Добавить задание</button>
             </form>

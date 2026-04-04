@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import ToDo from "../components/Tasks";
-import { Link } from "react-router-dom";
 import { priorityLabels } from "../components/priorities";
+import TaskItem from "../components/TaskItem";
 
 const Home = () => {
 
@@ -58,7 +57,7 @@ const Home = () => {
     }
 
     return (
-        <section>            
+        <section>
             <div className='container'>
                 <h2>Список задач</h2>
 
@@ -72,19 +71,15 @@ const Home = () => {
                 {/* Отрисовываем список задач */}
                 <ul>
                     {tasks.map((task) => (
-                        <li key={task.id}> {/* key обязателен для списков в React */}
-                            <div>
-                                <Link to={`/task/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <strong>{task.title}</strong>
-                                    <p className="text-content">{task.description}</p>
-                                    <em>Приоритет: {priorityLabels[task.priority] }</em>
-                                </Link>
-                            </div>
-                            <button className="bt-del" onClick={() => handleDelete(task.id)}>Удалить</button>
-                        </li>
+                        <TaskItem
+                            key={task.id} // Ключ по-прежнему нужен для списка
+                            task={task}
+                            priorityLabels={priorityLabels}
+                            handleDelete={handleDelete}
+                        />
                     ))}
                 </ul>
-            </div>       
+            </div>
 
         </section>
     );
