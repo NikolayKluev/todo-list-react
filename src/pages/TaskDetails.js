@@ -4,6 +4,8 @@ import InputField from '../components/InputField';
 import InputTextArea from '../components/InputTextArea';
 import PrioritySelector from '../components/PrioritySelector';
 import { priorityLabels } from '../components/priorities';
+import { executors } from '../components/Executors';
+import ExecutorsSelector from '../components/ExecutorsSelector';
 
 function TaskDetails() {
     // 1. Получаем ID из URL
@@ -37,7 +39,7 @@ function TaskDetails() {
         fetchTask();
     }, [id]); // Эффект перезапустится, если id в URL изменится
 
-    
+
     const handleFieldChange = (arg1, arg2) => {
         // Проверяем: если первый аргумент - это объект события (у него есть свойство target)
         if (arg1 && arg1.target) {
@@ -50,6 +52,14 @@ function TaskDetails() {
             const newValue = arg2;
             setTask(prev => ({ ...prev, [fieldName]: newValue }));
         }
+    };
+    
+   // Обработчик для ExecutorsSelector (он передает МАССИВ)
+    const handleExecutorsChange = (newExecutorIds) => {
+        setTask(prev => ({ 
+            ...prev, 
+            executors: newExecutorIds 
+        }));
     };
 
     // Сохранение изменений на сервере
@@ -76,10 +86,10 @@ function TaskDetails() {
 
     return (
         <div className='container'>
-            <h1>{isEditing ? 'Редактирование задачи' : 'Просмотр задачи'}</h1>
+            <h2>{isEditing ? 'Редактирование задачи' : 'Просмотр задачи'}</h2>
 
             <div className='container-item'>
-                <label>Название: </label>
+                <h4>Название: </h4>
                 {isEditing ? (
                     <InputField type="text" name="title" value={task.title}
                         placeholder={task.title} onChange={handleFieldChange} />
@@ -89,7 +99,7 @@ function TaskDetails() {
             </div>
 
             <div className='container-item'>
-                <label>Описание: </label>
+                <h4>Описание: </h4>
                 {isEditing ? (
                     <InputTextArea type="text" name="description" value={task.description}
                         placeholder={task.description} onChange={handleFieldChange} />
@@ -99,7 +109,27 @@ function TaskDetails() {
             </div>
 
             <div className='container-item'>
-                <label>Приоритет:</label>
+                <h4>Исполнители: </h4>
+                {isEditing ? (
+                    <ExecutorsSelector 
+                        // Передаем текущий список исполнителей из состояния задачи
+                        selectedIds={task.executors || []} 
+                        onChange={handleExecutorsChange} 
+                    />
+                ) : (
+                    // Блок для просмотра (режим Read-only)
+                    task.executors && task.executors.length > 0 ? (
+                        <p className='text-content'>                            
+                            {task.executors.map(id => executors[id] || 'Неизвестный').join(', ')}                            
+                        </p>
+                    ) : (
+                        <p className='text-content'>Исполнители не назначены</p>
+                    )
+                )}
+            </div>
+
+            <div className='container-item'>
+                <h4>Приоритет:</h4>
                 {isEditing ? (
                     <PrioritySelector name="priority" value={task.priority} onChange={handleFieldChange} />
                 ) : (

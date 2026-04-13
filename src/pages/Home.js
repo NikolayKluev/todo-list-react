@@ -73,7 +73,7 @@ const Home = () => {
                     {tasks.map((task) => (
                         <TaskItem
                             key={task.id} // Ключ по-прежнему нужен для списка
-                            task={task}
+                            task={task}                            
                             priorityLabels={priorityLabels}
                             handleDelete={handleDelete}
                         />

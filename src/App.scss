@@ -18,6 +18,12 @@ $pointer: pointer;
     width: $width;
 }
 
+@mixin gridElem() {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
 @mixin button($back-color) {
     width: 200px;
     height: 50px;
@@ -78,10 +84,22 @@ body {
     .container {
         @include elem(column, 20px, unset, unset, 100%);
         margin-bottom: 20px;
+
+        @media (max-width:$maxLaptopWidth) {
+            @include elem(column, 20px, unset, center, 100%);
+        }
     }
 
     .container-item {
-        @include elem(column, 5px, unset, unset, 50%)
+        @include elem(column, 5px, unset, unset, 50%);
+
+        @media (max-width: $maxLaptopWidth) {
+            width: 70%;
+        }
+
+        @media (max-width: $maxPhoneWidth) {
+            width: 95%;
+        }
     }
 
     .bt-add {
@@ -125,6 +143,10 @@ body {
         @include elem(column, 10px, unset, center, 50%);
         align-self: center;
 
+        @media (max-width: $maxLaptopWidth) {
+            @include elem(column, 10px , unset, center, 70%)
+        }
+
         @media (max-width: $maxPhoneWidth) {
             @include elem(column, 10px , unset, center, 90%)
         }
@@ -152,9 +174,7 @@ body {
 
     ul {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        @include gridElem();
         padding-inline-start: 0;
         justify-content: space-between;
         justify-items: center;
@@ -188,7 +208,28 @@ body {
     }
 
     .two-buttons {
-        @include elem(row, 5px, unset, unset, 100%)
+        @include elem(row, 5px, center, center, 100%);
+
+        @media (max-width: $maxPhoneWidth) {
+            @include elem(column, 5px, center, center, 100%);
+        }
     }
 
+    .executors {
+        @include gridElem();
+    }
+
+
+    .executor-item {
+        @include elem(row, 5px, space-between, unset, 50%);
+
+        input {
+            width: 20px;
+            height: 20px;
+        }
+
+        label {
+            width: 100%;            
+        }
+    }
 }
