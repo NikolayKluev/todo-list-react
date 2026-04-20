@@ -18,6 +18,7 @@ const CreateTask = () => {
         description: '',
         executors: [], // Теперь это часть основного состояния
         priority: 'high',
+        status: 'todo',
     });
 
 
@@ -99,7 +100,7 @@ const CreateTask = () => {
                     onChange={handleInputChange} 
                 />
                 
-                <ExecutorsSelector label="Исполнители:" onChange={handleExecutorsChange}/>
+                <ExecutorsSelector label="Исполнители:" selectedIds={formData.executors} onChange={handleExecutorsChange}/>
                                 
                 <PrioritySelector 
                     label="Приоритет" 

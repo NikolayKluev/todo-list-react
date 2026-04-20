@@ -162,7 +162,7 @@ body {
     }
 
     .priority-selector {
-        @include elem(column, 5px, unset, unset, 50%)
+        @include elem(column, 5px, unset, unset, 50%);
     }
 
     input,

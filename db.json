@@ -1,22 +1,4 @@
 {
-  "tasks": [
-    {
-      "title": "ascsac dfdvdf bfgbdcbcd 33333333",
-      "description": "sdvsdvsd egegd gtrgdf egtrgd grgdfv",
-      "executors": [
-        1,
-        3
-      ],
-      "priority": "middle",
-      "id": "OG-8BqGhb2Y"
-    },
-    {
-      "title": "Сделать dashboard с перетаскиванием",
-      "description": "нужно сделать ",
-      "executors": [],
-      "priority": "middle",
-      "id": "5XTTCo2LmcU"
-    }
-  ],
+  "tasks": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
