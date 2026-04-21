@@ -1,11 +1,10 @@
-// Этот файл отвечает ТОЛЬКО за статусы (колонки Канбана)
+// Этот файл отвечает за статусы (колонки Канбана)
 
-// Порядок, в котором колонки будут идти слева направо
-export const statusOrder = ['todo', 'in-progress', 'done'];
+export const statusOrder = ['todo', 'inprogress', 'done'];
 
-// Человеческие названия для колонок
+// названия для колонок
 export const statusLabels = {
   todo: 'В планах',
-  'in-progress': 'В работе',
+  inprogress : 'В работе',
   done: 'Готово'
 };

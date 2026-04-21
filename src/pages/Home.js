@@ -1,88 +1,60 @@
-import { useEffect, useState } from "react";
-import { priorityLabels } from "../components/priorities";
-import TaskItem from "../components/TaskItem";
+import React, { useState, useEffect } from 'react';
+import KanbanBoard from '../components/KanbanBoard';
 
-const Home = () => {
+function Home() {
+  const [tasks, setTasks] = useState([]);
 
-    // 1. Создаем состояние для хранения массива задач
-    const [tasks, setTasks] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+  useEffect(() => {
 
-    // 2. Используем useEffect для получения данных при монтировании компонента
-    useEffect(() => {
+    document.title = 'Главная | ToDoList';
 
-        document.title = 'Главная | ToDoList';
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
+        if (!response.ok) throw new Error('Ошибка загрузки');
+        const data = await response.json();
+        setTasks(data);
+      } catch (e) {
+        console.error("Ошибка загрузки задач:", e);
+      }
+    };
+    fetchTasks();
+  }, []);
 
-        const fetchTasks = async () => {
-            try {
-
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
-
-                if (!response.ok) {
-                    throw new Error('Не удалось получить задачи с сервера');
-                }
-
-                const data = await response.json(); // Преобразуем ответ в JSON
-                setTasks(data); // Сохраняем задачи в состояние
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchTasks();
-        // Зависимости пустые [], значит эффект сработает только один раз при загрузке
-    }, []);
-
-    const handleDelete = async (taskId) => {
-        try {
-            // Отправляем DELETE-запрос на сервер
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) {
-                throw new Error('Не удалось удалить задачу');
-            }
-
-            // Если запрос успешен, обновляем состояние.
-            // Мы фильтруем текущий массив задач, удаляя ту, чей id совпал.
-            setTasks(tasks.filter(task => task.id !== taskId));
-
-        } catch (err) {
-            alert(err.message);
-        }
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Ошибка удаления');
+      setTasks(prev => prev.filter(task => task.id !== id));
+    } catch (error) {
+      console.error('Не удалось удалить задачу:', error);
     }
+  };
 
-    return (
-        <section>
-            <div className='container'>
-                <h2>Список задач</h2>
+  const handleTaskUpdate = async (updatedTask) => {
+    console.log('handleTaskUpdate called', updatedTask);
 
-                {isLoading && <p>Загрузка задач...</p>}
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${updatedTask.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedTask),
+      });
+      if (!response.ok) throw new Error('Ошибка обновления');
+      const saved = await response.json();
+      setTasks(prev => prev.map(task => (task.id === saved.id ? saved : task)));
+    } catch (error) {
+      console.error('Не удалось обновить задачу:', error);
+    }
+  };
 
-                {error && <p style={{ color: 'red' }}>Ошибка: {error}</p>}
-
-                {/* Проверяем, есть ли задачи */}
-                {!isLoading && !error && tasks.length === 0 && <p>Задач пока нет. Добавьте новую!</p>}
-
-                {/* Отрисовываем список задач */}
-                <ul>
-                    {tasks.map((task) => (
-                        <TaskItem
-                            key={task.id} // Ключ по-прежнему нужен для списка
-                            task={task}                            
-                            priorityLabels={priorityLabels}
-                            handleDelete={handleDelete}
-                        />
-                    ))}
-                </ul>
-            </div>
-
-        </section>
-    );
-};
+  return (
+    <div>
+      <KanbanBoard tasks={tasks} onTaskUpdate={handleTaskUpdate} onDelete={handleDelete} />
+    </div>
+  );
+}
 
 export default Home;

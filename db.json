@@ -1,4 +1,67 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "Добавить canban доску в проект",
+      "description": "добавить доску и протестировать ее",
+      "executors": [
+        1,
+        2
+      ],
+      "priority": "middle",
+      "status": "todo",
+      "id": "Ir-F_vWQXEs"
+    },
+    {
+      "title": "Аксессуары для дома",
+      "description": "vdfvdfv",
+      "executors": [
+        2,
+        4
+      ],
+      "priority": "high",
+      "status": "inprogress",
+      "id": "nLKQSV37lvE"
+    },
+    {
+      "title": "jkkjnkk lmlkmlm",
+      "description": "lkmlkmklm lkmkmlkm klmoml",
+      "executors": [
+        1,
+        2
+      ],
+      "priority": "high",
+      "status": "inprogress",
+      "id": "-DEaYhHOPnA"
+    },
+    {
+      "title": "jbkjn kjnjknkjn kjnkjnkj",
+      "description": "kjkjn xdfxdf gvhjbhj ",
+      "executors": [
+        1
+      ],
+      "priority": "low",
+      "id": "ny5YYQEqNoA"
+    },
+    {
+      "title": "виапиапи аипаиап",
+      "description": "ваиаиа сипаи випаиапи ",
+      "executors": [
+        2
+      ],
+      "priority": "middle",
+      "status": "todo",
+      "id": "dwAD1WUDnWA"
+    },
+    {
+      "title": "сисмисми аиаписм ваиавиапи виавиапиа",
+      "description": "виапиа авиапиа ипиа ",
+      "executors": [
+        1
+      ],
+      "priority": "low",
+      "status": "todo",
+      "id": "vk_-_SnT3pU"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

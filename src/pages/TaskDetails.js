@@ -8,15 +8,15 @@ import { executors } from '../components/Executors';
 import ExecutorsSelector from '../components/ExecutorsSelector';
 
 function TaskDetails() {
-    // 1. Получаем ID из URL
+    // Получаем ID из URL
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // 2. Состояние для данных задачи
+    // Состояние для данных задачи
     const [task, setTask] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    // 3. Состояние для режима редактирования
+    // Состояние для режима редактирования
     const [isEditing, setIsEditing] = useState(false);
 
     // Получаем данные задачи с сервера при загрузке страницы

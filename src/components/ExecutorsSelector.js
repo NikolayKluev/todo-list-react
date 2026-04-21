@@ -1,7 +1,7 @@
 import React from "react";
 import { executors } from "./Executors";
 
-// Убираем useState! Компонент теперь только рендерит то, что ему дали.
+
 const ExecutorsSelector = ({ label, selectedIds = [], onChange }) => {
 
     const handleChange = (event) => {
@@ -18,7 +18,7 @@ const ExecutorsSelector = ({ label, selectedIds = [], onChange }) => {
             newSelectedIds = selectedIds.filter(id => id !== executorId);
         }
 
-        // Вызываем функцию onChange и передаем НОВЫЙ массив родителю
+        // Вызываем функцию onChange и передаем новый массив родителю
         onChange(newSelectedIds);
     };
 

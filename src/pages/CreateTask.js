@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const CreateTask = () => {
     useEffect(() => {
         document.title = 'Создать задание | ToDoList';
-    }, []); // Добавим пустой массив зависимостей для чистоты
+    }, []); 
 
     const navigate = useNavigate();
 
@@ -21,15 +21,13 @@ const CreateTask = () => {
         status: 'todo',
     });
 
-
-    // 3. Функция ввода данных (остается почти без изменений)
+    // Функция ввода данных 
     const handleInputChange = (name, value) => {
         setFormData(prevData => ({ ...prevData, [name]: value }));
     };
 
     // 4. Обновляем handleExecutorsChange, чтобы он обновлял основное состояние
     const handleExecutorsChange = (selectedIds) => {
-        console.log('Выбраны исполнители с ID:', selectedIds);
         // Используем setFormData вместо отдельного setExecutorsIds
         setFormData(prevData => ({ 
             ...prevData, 

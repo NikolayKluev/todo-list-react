@@ -18,10 +18,18 @@ $pointer: pointer;
     width: $width;
 }
 
-@mixin gridElem() {
+@mixin gridElem3col() {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    justify-items: center;
+}
+
+@mixin gridElem2col() {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-items: center;
 }
 
 @mixin button($back-color) {
@@ -144,11 +152,11 @@ body {
         align-self: center;
 
         @media (max-width: $maxLaptopWidth) {
-            @include elem(column, 10px , unset, center, 70%)
+            @include elem(column, 10px, unset, center, 70%)
         }
 
         @media (max-width: $maxPhoneWidth) {
-            @include elem(column, 10px , unset, center, 90%)
+            @include elem(column, 10px, unset, center, 90%)
         }
     }
 
@@ -157,8 +165,8 @@ body {
         @include elem(column, 5px, unset, unset, 90%);
 
         @media (max-width: $maxLaptopWidth) {
-            @include elem(column, 10px , unset, center, 90%)
-        }        
+            @include elem(column, 10px, unset, center, 90%)
+        }
     }
 
     .priority-selector {
@@ -172,16 +180,11 @@ body {
     }
 
 
-    ul {
-        width: 100%;
-        @include gridElem();
-        padding-inline-start: 0;
-        justify-content: space-between;
-        justify-items: center;
+    .kanban-board {
+        @include gridElem3col();        
 
         @media (max-width: $maxLaptopWidth) {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            @include gridElem2col();
         }
 
         @media (max-width: $maxPhoneWidth) {
@@ -190,21 +193,30 @@ body {
         }
     }
 
-    li {
-        list-style: none;
-        max-width: 400px;
-        @include elem(row, 0, space-between, unset, 100%);
-        padding: 10px;
-        border-radius: 15px;
-        border: 1px solid $border-color;
-
-        div {
-            @include elem(column, 5px, unset, unset, 60%);           
-        }
+    .kanban-item-wrapper {
+        @include elem(column, 10px, unset, flex-start, 100%);        
+        border-right: 2px dashed $border-color;
     }
 
-    .text-content {        
-        overflow-wrap: break-word;        
+    .kanban-item {
+        @include elem(column, 10px, unset, flex-start, 100%);
+        background-color: #f4f5f7;
+        border-radius: 8px;
+        padding: 12px;
+        
+    }
+
+    .task {
+        @include elem(column, 10px, unset, unset, 100%);
+        padding: 12px; 
+        border-radius: 5px;
+        background-color: white; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+   
+
+    .text-content {
+        overflow-wrap: break-word;
     }
 
     .two-buttons {
@@ -216,7 +228,7 @@ body {
     }
 
     .executors {
-        @include gridElem();
+        @include gridElem3col();
     }
 
 
@@ -229,7 +241,11 @@ body {
         }
 
         label {
-            width: 100%;            
+            width: 100%;
         }
     }
+}
+
+.kanban-column {
+    min-height: 200px;
 }
