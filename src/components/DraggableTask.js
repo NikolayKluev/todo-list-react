@@ -36,7 +36,10 @@ const DraggableTask = ({ task, onDelete }) => {
       <div className='task' style={{backgroundColor}}>
         <h3>{task.title}</h3>
         <p>{task.description}</p>
-        <button className='bt-del' onClick={() => onDelete(task.id)}>
+        <button className='bt-del' onClick={(e) => {
+          e.stopPropagation();
+          onDelete(task.id);
+        }}>
           Удалить
         </button>
       </div>

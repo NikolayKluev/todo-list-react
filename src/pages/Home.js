@@ -34,7 +34,7 @@ function Home() {
   };
 
   const handleTaskUpdate = async (updatedTask) => {
-    console.log('handleTaskUpdate called', updatedTask);
+    // console.log('handleTaskUpdate called', updatedTask);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${updatedTask.id}`, {

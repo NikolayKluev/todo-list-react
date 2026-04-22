@@ -86,7 +86,7 @@ body {
     }
 
     nav {
-        @include elem(row, 0, space-between, center, 100%)
+        @include elem(row, 0, space-between, center, 100%);
     }
 
     .container {
@@ -152,20 +152,21 @@ body {
         align-self: center;
 
         @media (max-width: $maxLaptopWidth) {
-            @include elem(column, 10px, unset, center, 70%)
+            @include elem(column, 10px, unset, center, 70%);
         }
 
         @media (max-width: $maxPhoneWidth) {
-            @include elem(column, 10px, unset, center, 90%)
+            @include elem(column, 10px, unset, center, 90%);
         }
     }
 
     .input-field,
     .input-textarea {
+
         @include elem(column, 5px, unset, unset, 90%);
 
         @media (max-width: $maxLaptopWidth) {
-            @include elem(column, 10px, unset, center, 90%)
+            @include elem(column, 10px, unset, center, 90%);
         }
     }
 
@@ -246,6 +247,6 @@ body {
     }
 }
 
-.kanban-column {
-    min-height: 200px;
-}
+// .kanban-column {
+//     min-height: 200px;
+// }
