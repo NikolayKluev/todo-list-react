@@ -4,11 +4,16 @@ import InputTextArea from "../components/InputTextArea";
 import PrioritySelector from "../components/PrioritySelector";
 import ExecutorsSelector from "../components/ExecutorsSelector";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, Zoom, Slide, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { showError, showSuccess, showWarning } from "../components/ToastifyComponents";
 
 const CreateTask = () => {
+
+    
     useEffect(() => {
         document.title = 'Создать задание | ToDoList';
-    }, []); 
+    }, []);
 
     const navigate = useNavigate();
 
@@ -29,18 +34,18 @@ const CreateTask = () => {
     // 4. Обновляем handleExecutorsChange, чтобы он обновлял основное состояние
     const handleExecutorsChange = (selectedIds) => {
         // Используем setFormData вместо отдельного setExecutorsIds
-        setFormData(prevData => ({ 
-            ...prevData, 
-            executors: selectedIds 
+        setFormData(prevData => ({
+            ...prevData,
+            executors: selectedIds
         }));
     };
 
     // 5. Обновляем handlePriorityChange по тому же принципу
     const handlePriorityChange = (name, value) => {
         // Используем setFormData вместо отдельного setTaskPriority
-        setFormData(prevData => ({ 
-            ...prevData, 
-            priority: value 
+        setFormData(prevData => ({
+            ...prevData,
+            priority: value
         }));
     };
 
@@ -50,7 +55,7 @@ const CreateTask = () => {
         e.preventDefault();
 
         if (!formData.title.trim() || !formData.description.trim()) {
-            alert('Пожалуйста, заполните все поля.');
+            showWarning();
             return;
         }
 
@@ -62,7 +67,7 @@ const CreateTask = () => {
             });
 
             if (response.ok) {
-                alert('Форма успешно отправлена!');
+                showSuccess();
                 // Сбрасываем форму (теперь это просто сброс одного состояния)
                 setFormData({
                     title: '',
@@ -71,11 +76,11 @@ const CreateTask = () => {
                     priority: 'high',
                 });
             } else {
-                alert('Ошибка при отправке формы.');
+                showError();
             }
         } catch (error) {
             console.error('Ошибка:', error);
-            alert('Ошибка при отправке формы.');
+            showError();
         }
     };
 
@@ -83,33 +88,36 @@ const CreateTask = () => {
         <div className="container">
             <form className="contact-form" onSubmit={handleSubmit}>
                 <h2>Создать задание</h2>
-                <InputField 
-                    label="Название" 
-                    type="text" 
-                    name="title" 
-                    placeholder="Введите название" 
-                    onChange={handleInputChange} 
+                <InputField
+                    label="Название"
+                    type="text"
+                    name="title"
+                    placeholder="Введите название"
+                    value={formData.title}
+                    onChange={handleInputChange}
                 />
-                <InputTextArea 
-                    label="Описание" 
-                    type="text" 
-                    name="description" 
-                    placeholder="Опишите задание" 
-                    onChange={handleInputChange} 
+                <InputTextArea
+                    label="Описание"
+                    type="text"
+                    name="description"
+                    placeholder="Опишите задание"
+                    value={formData.description}
+                    onChange={handleInputChange}
                 />
-                
-                <ExecutorsSelector label="Исполнители:" selectedIds={formData.executors} onChange={handleExecutorsChange}/>
-                                
-                <PrioritySelector 
-                    label="Приоритет" 
-                    name="priority" 
-                    value={formData.priority} 
-                    onChange={handlePriorityChange} 
+
+                <ExecutorsSelector label="Исполнители:" selectedIds={formData.executors} onChange={handleExecutorsChange} />
+
+                <PrioritySelector
+                    label="Приоритет"
+                    name="priority"
+                    value={formData.priority}
+                    onChange={handlePriorityChange}
                 />
 
                 <button className="bt-add" type="submit">Добавить задание</button>
             </form>
             <button onClick={() => navigate(-1)} className='bt-cancel'>Назад к списку</button>
+            <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} transition={Flip} />
         </div>
     );
 };

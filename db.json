@@ -1,17 +1,6 @@
 {
   "tasks": [
     {
-      "title": "Добавить canban доску в проект",
-      "description": "добавить доску и протестировать ее",
-      "executors": [
-        1,
-        2
-      ],
-      "priority": "middle",
-      "status": "inprogress",
-      "id": "Ir-F_vWQXEs"
-    },
-    {
       "title": "jbkjn kjnjknkjn kjnkjnkj",
       "description": "kjkjn xdfxdf gvhjbhj ",
       "executors": [
@@ -19,6 +8,38 @@
       ],
       "priority": "low",
       "id": "ny5YYQEqNoA"
+    },
+    {
+      "title": "форма создания",
+      "description": "доработать функцию сброса инпутов при добавлении задания",
+      "executors": [],
+      "priority": "middle",
+      "id": "qvS8cV7Ug40"
+    },
+    {
+      "title": "test react-toastify",
+      "description": "csdc scsdcsd ",
+      "executors": [
+        2
+      ],
+      "priority": "high",
+      "id": "nCRGa2p2SXg"
+    },
+    {
+      "title": "svdsvd ",
+      "description": "ssdcs ",
+      "executors": [
+        2
+      ],
+      "priority": "high",
+      "id": "FyxHmPJkrkU"
+    },
+    {
+      "title": "svdfv",
+      "description": "dvdf ",
+      "executors": [],
+      "priority": "high",
+      "id": "cQZNioFxYqc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

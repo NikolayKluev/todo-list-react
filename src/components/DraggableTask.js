@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useNavigate } from 'react-router-dom';
 import { priorityColors } from './priorities';
 
-const DraggableTask = ({ task, onDelete }) => {
+const DraggableTask = ({ task }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: task.id,
   });
@@ -35,13 +35,7 @@ const DraggableTask = ({ task, onDelete }) => {
     >
       <div className='task' style={{backgroundColor}}>
         <h3>{task.title}</h3>
-        <p>{task.description}</p>
-        <button className='bt-del' onClick={(e) => {
-          e.stopPropagation();
-          onDelete(task.id);
-        }}>
-          Удалить
-        </button>
+        <p>{task.description}</p>        
       </div>
     </div>
   );

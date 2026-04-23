@@ -197,6 +197,11 @@ body {
     .kanban-item-wrapper {
         @include elem(column, 10px, unset, flex-start, 100%);        
         border-right: 2px dashed $border-color;
+        border-bottom: 2px dashed $border-color;
+
+        @media (max-width: $maxPhoneWidth) {
+            border-right: none;
+        }
     }
 
     .kanban-item {
@@ -225,7 +230,16 @@ body {
 
         @media (max-width: $maxPhoneWidth) {
             @include elem(column, 5px, center, center, 100%);
-        }
+        }        
+    }
+
+    .two-buttons button:last-of-type {
+        margin-left: 50px;
+
+        @media (max-width: $maxPhoneWidth) {
+            margin-left: 0;
+            margin-top: 50px;
+        }        
     }
 
     .executors {
@@ -246,7 +260,3 @@ body {
         }
     }
 }
-
-// .kanban-column {
-//     min-height: 200px;
-// }

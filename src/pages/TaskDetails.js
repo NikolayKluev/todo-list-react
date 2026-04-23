@@ -6,6 +6,11 @@ import PrioritySelector from '../components/PrioritySelector';
 import { priorityLabels } from '../components/priorities';
 import { executors } from '../components/Executors';
 import ExecutorsSelector from '../components/ExecutorsSelector';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { showErrNetwork, showErrSave, showSuccess } from '../components/ToastifyComponents';
+import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function TaskDetails() {
     // Получаем ID из URL
@@ -53,12 +58,12 @@ function TaskDetails() {
             setTask(prev => ({ ...prev, [fieldName]: newValue }));
         }
     };
-    
-   // Обработчик для ExecutorsSelector (он передает МАССИВ)
+
+    // Обработчик для ExecutorsSelector (он передает МАССИВ)
     const handleExecutorsChange = (newExecutorIds) => {
-        setTask(prev => ({ 
-            ...prev, 
-            executors: newExecutorIds 
+        setTask(prev => ({
+            ...prev,
+            executors: newExecutorIds
         }));
     };
 
@@ -73,13 +78,46 @@ function TaskDetails() {
 
             if (response.ok) {
                 setIsEditing(false); // Выходим из режима редактирования
+                showSuccess();
             } else {
-                alert('Ошибка при сохранении');
+                showErrSave();
             }
         } catch (err) {
-            alert('Ошибка сети');
+            showErrNetwork();
         }
     };
+
+    const handleDelete = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+        method: 'DELETE',        
+      });
+      if (!response.ok) throw new Error('Ошибка удаления');
+    //   setTasks(prev => prev.filter(task => task.id !== id));
+    } catch (error) {
+      console.error('Не удалось удалить задачу:', error);
+    }
+  };
+
+  const showConfirm = () => {
+    confirmAlert({
+      title: 'Подтверждение действия',
+      message: 'Вы уверены, что хотите удалить этот элемент?',
+      buttons: [
+        {
+          label: 'Да',
+          onClick: () => {
+            handleDelete();
+            navigate(-1);            
+          }
+        },
+        {
+          label: 'Нет',
+          onClick: () => { console.log('Отмена удаления'); }
+        }
+      ]
+    });
+  };
 
     if (isLoading) return <p>Загрузка задачи...</p>;
     if (!task) return <p>Задача не найдена.</p>;
@@ -111,16 +149,16 @@ function TaskDetails() {
             <div className='container-item'>
                 <h4>Исполнители: </h4>
                 {isEditing ? (
-                    <ExecutorsSelector 
+                    <ExecutorsSelector
                         // Передаем текущий список исполнителей из состояния задачи
-                        selectedIds={task.executors || []} 
-                        onChange={handleExecutorsChange} 
+                        selectedIds={task.executors || []}
+                        onChange={handleExecutorsChange}
                     />
                 ) : (
                     // Блок для просмотра (режим Read-only)
                     task.executors && task.executors.length > 0 ? (
-                        <p className='text-content'>                            
-                            {task.executors.map(id => executors[id] || 'Неизвестный').join(', ')}                            
+                        <p className='text-content'>
+                            {task.executors.map(id => executors[id] || 'Неизвестный').join(', ')}
                         </p>
                     ) : (
                         <p className='text-content'>Исполнители не назначены</p>
@@ -150,7 +188,11 @@ function TaskDetails() {
                         <button onClick={() => navigate(-1)} className='bt-cancel'>Назад к списку</button>
                     </>
                 )}
+                <button className='bt-del' onClick={showConfirm}>
+                    Удалить
+                </button>
             </div>
+            <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} transition={Flip} />
         </div>
     );
 }

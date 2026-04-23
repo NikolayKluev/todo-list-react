@@ -29,6 +29,7 @@ function App() {
           <Route path='/task/:id' element={<TaskDetails />}/>           
         </Routes>
         <hr></hr>
+        <p>ToDoApp 2026</p>       
       </div>
     
   );

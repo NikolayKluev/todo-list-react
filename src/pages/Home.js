@@ -21,17 +21,7 @@ function Home() {
     fetchTasks();
   }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Ошибка удаления');
-      setTasks(prev => prev.filter(task => task.id !== id));
-    } catch (error) {
-      console.error('Не удалось удалить задачу:', error);
-    }
-  };
+  
 
   const handleTaskUpdate = async (updatedTask) => {
     // console.log('handleTaskUpdate called', updatedTask);
@@ -52,7 +42,7 @@ function Home() {
 
   return (
     <div>
-      <KanbanBoard tasks={tasks} onTaskUpdate={handleTaskUpdate} onDelete={handleDelete} />
+      <KanbanBoard tasks={tasks} onTaskUpdate={handleTaskUpdate} />
     </div>
   );
 }
