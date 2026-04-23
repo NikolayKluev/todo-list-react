@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import CreateTask from './pages/CreateTask';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import TaskDetails from './pages/TaskDetails';
+import { ToastContainer, Zoom, Slide, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -29,7 +31,8 @@ function App() {
           <Route path='/task/:id' element={<TaskDetails />}/>           
         </Routes>
         <hr></hr>
-        <p>ToDoApp 2026</p>       
+        <p>ToDoApp 2026</p>   
+        <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} transition={Flip} />    
       </div>
     
   );

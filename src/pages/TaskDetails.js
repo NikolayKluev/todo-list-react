@@ -9,8 +9,7 @@ import ExecutorsSelector from '../components/ExecutorsSelector';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { showErrNetwork, showErrSave, showSuccess } from '../components/ToastifyComponents';
-import { ToastContainer, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 function TaskDetails() {
     // Получаем ID из URL
@@ -191,8 +190,7 @@ function TaskDetails() {
                 <button className='bt-del' onClick={showConfirm}>
                     Удалить
                 </button>
-            </div>
-            <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} transition={Flip} />
+            </div>            
         </div>
     );
 }
