@@ -19,9 +19,11 @@ const CreateTask = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
+        author: '',
         executors: [], // Теперь это часть основного состояния
-        priority: 'high',
+        priority: 'low',
         status: 'todo',
+        createdAt: new Date().toLocaleString('ru-RU'),
     });
 
     // Функция ввода данных 
@@ -70,8 +72,10 @@ const CreateTask = () => {
                 setFormData({
                     title: '',
                     description: '',
+                    author: '',
                     executors: [],
-                    priority: 'high',
+                    priority: 'low',     
+                    createdAt: '',               
                 });
             } else {
                 showError();
@@ -94,12 +98,22 @@ const CreateTask = () => {
                     value={formData.title}
                     onChange={handleInputChange}
                 />
+                
                 <InputTextArea
                     label="Описание"
                     type="text"
                     name="description"
                     placeholder="Опишите задание"
                     value={formData.description}
+                    onChange={handleInputChange}
+                />
+
+                <InputField
+                    label="Автор"
+                    type="text"
+                    name="author"
+                    placeholder="Введите автора"
+                    value={formData.author}
                     onChange={handleInputChange}
                 />
 

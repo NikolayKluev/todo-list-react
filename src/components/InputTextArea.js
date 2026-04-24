@@ -9,7 +9,7 @@ const InputTextArea = ({ label, value, type, name, placeholder, onChange }) => {
     return (
         <div className="input-textarea">
             <label>{label}</label>
-            <textarea type={type} name={name} value={value} placeholder={placeholder} onChange={handleChange} />
+            <textarea type={type} name={name} value={value} placeholder={placeholder} onChange={handleChange} minLength={40} />
         </div>
     );
 };

@@ -87,36 +87,36 @@ function TaskDetails() {
     };
 
     const handleDelete = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'DELETE',        
-      });
-      if (!response.ok) throw new Error('Ошибка удаления');
-    //   setTasks(prev => prev.filter(task => task.id !== id));
-    } catch (error) {
-      console.error('Не удалось удалить задачу:', error);
-    }
-  };
-
-  const showConfirm = () => {
-    confirmAlert({
-      title: 'Подтверждение действия',
-      message: 'Вы уверены, что хотите удалить этот элемент?',
-      buttons: [
-        {
-          label: 'Да',
-          onClick: () => {
-            handleDelete();
-            navigate(-1);            
-          }
-        },
-        {
-          label: 'Нет',
-          onClick: () => { console.log('Отмена удаления'); }
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) throw new Error('Ошибка удаления');
+            //   setTasks(prev => prev.filter(task => task.id !== id));
+        } catch (error) {
+            console.error('Не удалось удалить задачу:', error);
         }
-      ]
-    });
-  };
+    };
+
+    const showConfirm = () => {
+        confirmAlert({
+            title: 'Подтверждение действия',
+            message: 'Вы уверены, что хотите удалить этот элемент?',
+            buttons: [
+                {
+                    label: 'Да',
+                    onClick: () => {
+                        handleDelete();
+                        navigate(-1);
+                    }
+                },
+                {
+                    label: 'Нет',
+                    onClick: () => { console.log('Отмена удаления'); }
+                }
+            ]
+        });
+    };
 
     if (isLoading) return <p>Загрузка задачи...</p>;
     if (!task) return <p>Задача не найдена.</p>;
@@ -143,6 +143,11 @@ function TaskDetails() {
                 ) : (
                     <p className='text-content'>{task.description}</p>
                 )}
+            </div>
+
+            <div className='container-item'>
+                <h4>Автор:</h4>
+                <strong>{task.author}</strong>
             </div>
 
             <div className='container-item'>
@@ -174,6 +179,11 @@ function TaskDetails() {
                 )}
             </div>
 
+            <div className='container-item'>
+                <h4>Дата создания:</h4>
+                <em>{task.createdAt}</em>
+            </div>
+
             {/* Кнопки управления */}
             <div className='two-buttons'>
                 {isEditing ? (
@@ -190,7 +200,7 @@ function TaskDetails() {
                 <button className='bt-del' onClick={showConfirm}>
                     Удалить
                 </button>
-            </div>            
+            </div>
         </div>
     );
 }
