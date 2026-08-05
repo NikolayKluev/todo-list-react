@@ -128,7 +128,7 @@ const CreateTask = () => {
 
                 <button className="bt-add" type="submit">Добавить задание</button>
             </form>
-            <button onClick={() => navigate(-1)} className='bt-cancel'>Назад к списку</button>            
+            <button onClick={() => navigate('/')} className='bt-cancel'>Назад к списку</button>            
         </div>
     );
 };

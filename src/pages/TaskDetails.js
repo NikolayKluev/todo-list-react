@@ -4,11 +4,10 @@ import InputField from '../components/InputField';
 import InputTextArea from '../components/InputTextArea';
 import PrioritySelector from '../components/PrioritySelector';
 import { priorityLabels } from '../components/priorities';
-import { executors } from '../components/Executors';
 import ExecutorsSelector from '../components/ExecutorsSelector';
-import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { showErrNetwork, showErrSave, showSuccess } from '../components/ToastifyComponents';
+import { showConfirm } from '../components/ShowConfirm';
 
 
 function TaskDetails() {
@@ -22,6 +21,7 @@ function TaskDetails() {
 
     // Состояние для режима редактирования
     const [isEditing, setIsEditing] = useState(false);
+    const [executors, setExecutors] = useState([]);
 
     // Получаем данные задачи с сервера при загрузке страницы
     useEffect(() => {
@@ -41,6 +41,11 @@ function TaskDetails() {
             }
         };
         fetchTask();
+
+        fetch('http://localhost:3001/executors')
+            .then(res => res.json())
+            .then(data => setExecutors(data));
+
     }, [id]); // Эффект перезапустится, если id в URL изменится
 
 
@@ -98,28 +103,17 @@ function TaskDetails() {
         }
     };
 
-    const showConfirm = () => {
-        confirmAlert({
-            title: 'Подтверждение действия',
-            message: 'Вы уверены, что хотите удалить этот элемент?',
-            buttons: [
-                {
-                    label: 'Да',
-                    onClick: () => {
-                        handleDelete();
-                        navigate(-1);
-                    }
-                },
-                {
-                    label: 'Нет',
-                    onClick: () => { console.log('Отмена удаления'); }
-                }
-            ]
-        });
+    const getExecutorNames = () => {
+        // Находим объекты выбранных исполнителей по их ID
+        return task.executors
+            .map(id => executors.find(user => user.id === id))
+            .filter(user => user !== undefined); // Отсеиваем пустые значения
     };
 
     if (isLoading) return <p>Загрузка задачи...</p>;
     if (!task) return <p>Задача не найдена.</p>;
+
+
 
     return (
         <div className='container'>
@@ -162,7 +156,14 @@ function TaskDetails() {
                     // Блок для просмотра (режим Read-only)
                     task.executors && task.executors.length > 0 ? (
                         <p className='text-content'>
-                            {task.executors.map(id => executors[id] || 'Неизвестный').join(', ')}
+                            {
+                                // task.executors.map(id => executors[id] || 'Неизвестный').join(', ')
+                                
+                                    getExecutorNames().length > 0
+                                        ? getExecutorNames().map(u => u.name).join(', ')
+                                        : 'Не назначено'
+                                
+                            }
                         </p>
                     ) : (
                         <p className='text-content'>Исполнители не назначены</p>
@@ -197,7 +198,7 @@ function TaskDetails() {
                         <button onClick={() => navigate(-1)} className='bt-cancel'>Назад к списку</button>
                     </>
                 )}
-                <button className='bt-del' onClick={showConfirm}>
+                <button className='bt-del' onClick={() => showConfirm(navigate, () => handleDelete())}>
                     Удалить
                 </button>
             </div>

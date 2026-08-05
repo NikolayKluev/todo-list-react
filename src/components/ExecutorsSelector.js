@@ -1,11 +1,19 @@
 import React from "react";
-import { executors } from "./Executors";
+import { useState, useEffect } from "react";
 
 
 const ExecutorsSelector = ({ label, selectedIds = [], onChange }) => {
 
+    const [executors, setExecutors] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/executors')
+            .then(res => res.json())
+            .then(data => setExecutors(data));
+    }, []);
+
     const handleChange = (event) => {
-        const executorId = parseInt(event.target.value);
+        const executorId = event.target.value;
         const isChecked = event.target.checked;
 
         // Создаем НОВЫЙ массив на основе текущего selectedIds
@@ -24,26 +32,27 @@ const ExecutorsSelector = ({ label, selectedIds = [], onChange }) => {
 
     return (
         <div className="container">
-            <label>{ label }</label>
+            <label>{label}</label>
             <div className="executors">
-                {Object.entries(executors).map(([id, name]) => {
-                    const idAsNumber = parseInt(id);
-                    // Проверяем, есть ли текущий ID в массиве selectedIds, который пришел от родителя
-                    const isChecked = selectedIds.includes(idAsNumber);
+                {
+                    executors.map((exec) => {
+                        // Проверяем, есть ли текущий ID в массиве selectedIds, который пришел от родителя
+                        const isChecked = selectedIds.includes(exec.id);
 
-                    return (
-                        <div key={idAsNumber} className="executor-item">
-                            <input
-                                type="checkbox"
-                                id={`executor-${idAsNumber}`}
-                                value={idAsNumber}
-                                checked={isChecked}
-                                onChange={handleChange}
-                            />
-                            <label htmlFor={`executor-${idAsNumber}`}>{name}</label>
-                        </div>
-                    );
-                })}
+                        return (
+                            <div key={exec.id} className="executor-item">
+                                <input
+                                    type="checkbox"
+                                    id={`executor-${exec.id}`}
+                                    value={exec.id}
+                                    checked={isChecked}
+                                    onChange={handleChange}
+                                />
+                                <label htmlFor={`executor-${exec.id}`}>{exec.name}</label>
+                            </div>
+                        );
+                    })
+                }
             </div>
         </div>
 

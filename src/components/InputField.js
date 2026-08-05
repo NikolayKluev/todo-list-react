@@ -12,7 +12,7 @@ const InputField = ({ label, type, value, name, placeholder, onChange }) => {
     return (
         <div className="input-field">
             <label>{label}</label>
-            <input type={type} name={name} value={value} placeholder={placeholder} onChange={handleChange} />
+            <input type={type} name={name} value={value} placeholder={placeholder} onChange={handleChange} required/>
         </div>
     );
 };

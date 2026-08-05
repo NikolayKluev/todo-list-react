@@ -2,4 +2,5 @@ node_modules/
 .gigaide/
 .idea/
 .vscode/
+db.json
 
