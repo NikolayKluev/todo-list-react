@@ -6,8 +6,12 @@ import TaskDetails from './pages/TaskDetails';
 import { ToastContainer, Zoom, Slide, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExecutorsCrDel from './pages/ExecutorsCrDel';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css'
 
 function App() {
+
+  const toMainPageId = 'toMainPage';
 
   // хук, чтобы получить функцию навигации
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ function App() {
     <div className='app'>
       <nav>
         <h1>
-          <Link to='/'>ToDoList</Link>
+          <Link to='/' data-tooltip-id={toMainPageId} data-tooltip-content='На главную' >ToDoList</Link>
         </h1>
         <div className='two-buttons-nav'>
           <button className='bt-add' type='button' onClick={createTask}>Создать задание</button>
@@ -43,6 +47,7 @@ function App() {
       <hr></hr>
       <p>ToDoApp 2026</p>
       <ToastContainer position="top-center" autoClose={1000} hideProgressBar={true} transition={Flip} />
+      <Tooltip id='toMainPage' place='bottom' delayShow={300}/>
     </div>
 
   );
